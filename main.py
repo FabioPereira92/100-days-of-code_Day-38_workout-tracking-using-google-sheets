@@ -7,11 +7,11 @@ WEIGHT_KG = 82
 HEIGHT_CM = 182
 AGE = 33
 
-APP_ID = os.environ["app_65343d6a6804464e9c79c44f"]
-API_KEY = os.environ["nix_live_16uV8y063a3l0Sb626JmPlyaOIVQ1p33"]
+APP_ID = os.environ.get("APP_ID")
+API_KEY = os.environ.get("API_KEY")
 
 exercise_endpoint = "https://app.100daysofpython.dev/v1/nutrition/natural/exercise"
-sheet_endpoint = os.environ["https://api.sheety.co/17d1246c3744656687dac2c352ec551f/workoutTracking/workouts"]
+sheet_endpoint = os.environ.get("SHEET_ENDPOINT")
 
 exercise_text = input("Tell me which exercises you did: ")
 
@@ -31,12 +31,11 @@ parameters = {
 response = requests.post(exercise_endpoint, json=parameters, headers=headers)
 result = response.json()
 
-
 today_date = datetime.now().strftime("%d/%m/%Y")
 now_time = datetime.now().strftime("%X")
 
 bearer_headers = {
-    "Authorization": f"Bearer {os.environ["12345"]}"
+    "Authorization": f"Bearer {os.environ.get("TOKEN")}"
 }
 
 for exercise in result["exercises"]:
@@ -50,9 +49,8 @@ for exercise in result["exercises"]:
         }
     }
 
-    sheet_response = requests.post(sheet_endpoint, json=sheet_inputs, headers=bearer_headers)
+    requests.post(sheet_endpoint, json=sheet_inputs, headers=bearer_headers)
 
-    print(sheet_response.text)
 
 
 
